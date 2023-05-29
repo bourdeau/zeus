@@ -1,4 +1,4 @@
-name: Build
+name: build
 
 on:
   pull_request:
@@ -6,7 +6,7 @@ on:
       - "**"
     types: [opened, synchronize, reopened]
   workflow_run:
-    workflows: ["Linter"]
+    workflows: ["linter"]
     types:
       - completed
 
