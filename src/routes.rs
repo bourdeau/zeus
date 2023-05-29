@@ -4,7 +4,7 @@ use rocket_okapi::{
 };
 use sea_orm_rocket::Connection;
 
-use crate::{dto, error, mutation::Mutation, pool::Db, post, query::Query};
+use crate::{dto, error, services::PostService, pool::Db, post, query::Query};
 
 const DEFAULT_POSTS_PER_PAGE: u64 = 5;
 
@@ -24,7 +24,7 @@ async fn create(
 ) -> R<Option<String>> {
     let db = conn.into_inner();
     let form = post_data?.into_inner();
-    let cmd = Mutation::create_post(db, form);
+    let cmd = PostService::create_post(db, form);
     match cmd.await {
         Ok(_) => Ok(Json(Some("Post successfully added.".to_string()))),
         Err(e) => {
@@ -49,7 +49,7 @@ async fn update(
 
     let form = post_data?.into_inner();
 
-    let cmd = Mutation::update_post_by_id(db, id, form);
+    let cmd = PostService::update_post_by_id(db, id, form);
     match cmd.await {
         Ok(_) => Ok(Json(Some("Post successfully updated.".to_string()))),
         Err(e) => {
@@ -69,7 +69,7 @@ async fn list(
     conn: Connection<'_, Db>,
     page: Option<u64>,
     posts_per_page: Option<u64>,
-) -> R<dto::PostsDto> {
+) -> R<dto::PaginatePosts> {
     let db = conn.into_inner();
 
     // Set page number and items per page
@@ -88,7 +88,7 @@ async fn list(
         .await
         .expect("Cannot find posts in page");
 
-    Ok(Json(dto::PostsDto {
+    Ok(Json(dto::PaginatePosts {
         page,
         posts_per_page,
         num_pages,
@@ -112,7 +112,7 @@ async fn get_by_id(conn: Connection<'_, Db>, id: i32) -> R<Option<post::Model>> 
 async fn delete(conn: Connection<'_, Db>, id: i32) -> R<Option<String>> {
     let db = conn.into_inner();
 
-    let cmd = Mutation::delete_post(db, id);
+    let cmd = PostService::delete_post(db, id);
     match cmd.await {
         Ok(_) => Ok(Json(Some("Post successfully deleted.".to_string()))),
         Err(e) => {
