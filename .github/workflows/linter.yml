@@ -1,4 +1,4 @@
-name: Linter
+name: linter
 
 on:
   pull_request:
@@ -8,7 +8,7 @@ on:
 
 jobs:
   check:
-    name: Check
+    name: check
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -19,7 +19,7 @@ jobs:
       - run: cargo check
 
   fmt:
-    name: Rustfmt
+    name: fmt
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -30,7 +30,7 @@ jobs:
       - run: cargo fmt --all -- --check
 
   clippy:
-    name: Clippy
+    name: clippy
     runs-on: ubuntu-latest
     permissions:
       checks: write # to add clippy checks to PR diffs
