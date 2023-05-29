@@ -1,0 +1,29 @@
+version: "3.8"
+   
+services:
+
+  zeus:
+    build: .
+    container_name: zeus
+    hostname: zeus
+    volumes:
+      - .:/app
+    ports:
+      - "8000:8000"
+    env_file:
+      - ./.env
+    depends_on:
+      - zeusdb
+
+  zeusdb:
+    image: postgres:15.3
+    container_name: zeusdb
+    hostname: zeusdb
+    volumes:
+      - ./postgres_data:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_DB: zeusdb
+      POSTGRES_USER: zeusdb
+      POSTGRES_PASSWORD: zeusdb

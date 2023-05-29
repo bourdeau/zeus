@@ -1,0 +1,4 @@
+postgres_data/
+target
+Cargo.lock
+.vscode

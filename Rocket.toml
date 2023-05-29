@@ -1,0 +1,11 @@
+[default]
+template_dir = "api/templates/"
+
+[default.shutdown]
+ctrlc = false
+signals = ["term", "hup"]
+grace = 10
+mercy = 5
+
+[default.databases.sea_orm]
+url = "postgres://zeusdb:zeusdb@zeusdb:5432/zeusdb"
