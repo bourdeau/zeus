@@ -90,7 +90,9 @@ fn custom_openapi_spec() -> OpenApi {
             }),
             license: Some(License {
                 name: "Apache-2.0".to_owned(),
-                url: Some("https://github.com/bourdeau/zeus/blob/master/LICENSE-APACHE".to_owned()),
+                url: Some(
+                    "https://github.com/bourdeau/zeus/blob/master/LICENSE-APACHE".to_owned(),
+                ),
                 ..Default::default()
             }),
             version: env!("CARGO_PKG_VERSION").to_owned(),
