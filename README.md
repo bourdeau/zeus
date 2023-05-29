@@ -17,4 +17,3 @@ REST API Template for micro services written in Rust.
 ```bash
 docker compose up
 ```
-https://deps.rs/repo/github/bourdeau/zeus
