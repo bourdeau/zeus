@@ -15,7 +15,6 @@ use rocket_cors::{AllowedHeaders, AllowedOrigins, Cors};
 
 mod dto;
 mod error;
-mod services;
 mod pool;
 mod post;
 mod query;
