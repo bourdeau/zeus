@@ -12,7 +12,7 @@ impl Mutation {
             id: Set(data.id.to_owned()),
             title: Set(data.title.to_owned()),
             text: Set(data.text.to_owned()),
-            ..Default::default()
+            // ..Default::default() # fix: To set default values(clippy)
         }
         .save(db)
         .await
