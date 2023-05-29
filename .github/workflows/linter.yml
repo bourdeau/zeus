@@ -1,4 +1,4 @@
-name: Check and Lint
+name: Linter
 
 on:
   pull_request:
