@@ -1,6 +1,6 @@
 [package]
 name = "zeus"
-version = "0.0.1"
+version = "0.0.2"
 authors = ["Pierre-Henri Bourdeau <phbasic@gmail.com>"]
 edition = "2021"
 readme = "README.md"
