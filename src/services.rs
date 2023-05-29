@@ -1,9 +1,9 @@
 use crate::{post, post::Entity as Post};
 use sea_orm::*;
 
-pub struct Mutation;
+pub struct PostService;
 
-impl Mutation {
+impl PostService {
     pub async fn create_post(
         db: &DbConn,
         data: post::Model,
