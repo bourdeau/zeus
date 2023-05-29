@@ -1,6 +1,6 @@
 # ⚡ Zeus
 
-[![Build Status](https://github.com/bourdeau/zeus/actions/workflows/build.yml/badge.svg)](https://github.com/bourdeau/zeus/actions) [![Dependency Status](https://deps.rs/repo/github/bourdeau/zeus/status.svg)](https://deps.rs/repo/github/bourdeau/zeus)
+[![build status](https://github.com/bourdeau/zeus/actions/workflows/build.yml/badge.svg)](https://github.com/bourdeau/zeus/actions) [![dependency status](https://deps.rs/repo/github/bourdeau/zeus/status.svg)](https://deps.rs/repo/github/bourdeau/zeus)
 
 REST API Template for micro services written in Rust.
 
