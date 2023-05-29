@@ -8,7 +8,7 @@ homepage = "https://github.com/bourdeau/zeus/"
 repository = "https://github.com/bourdeau/zeus/"
 license = "Apache-2.0"
 keywords = ["rust", "api", "rocket"]
-publish = false
+publish = true
 
 
 [dependencies]
