@@ -4,7 +4,7 @@ use rocket_okapi::{
 };
 use sea_orm_rocket::Connection;
 
-use crate::{dto, error, pool::Db, post, query::Query, services::PostService};
+use crate::{dto, error, services::PostService, pool::Db, post, query::Query};
 
 const DEFAULT_POSTS_PER_PAGE: u64 = 5;
 
