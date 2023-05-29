@@ -1,13 +1,13 @@
-**/.git
-**/.gitignore
-**/.DS_Store
-**/.vscode
-**/coverage
-**/.env
-**/.aws
-**/.ssh
-Dockerfile
-README.md
-docker-compose.yml
+/.git/
+/.github/
+target/
+.vscode
+
+# Files
+.gitignore
 .env
-.github/
+*.md
+Dockerfile
+LICENSE-*
+rustfmt.toml
+docker-compose.yml
