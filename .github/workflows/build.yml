@@ -12,7 +12,7 @@ on:
 
 jobs:
   build:
-    name: Build
+    name: docker compose
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
