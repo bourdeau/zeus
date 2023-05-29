@@ -1,3 +1,5 @@
-indent_style = "Block"
 reorder_imports = true
-imports_granularity="Crate"
+
+# Only with nightly
+# imports_granularity="Crate"
+# indent_style = "Block"

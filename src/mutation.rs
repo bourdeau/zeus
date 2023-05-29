@@ -4,10 +4,7 @@ use sea_orm::*;
 pub struct Mutation;
 
 impl Mutation {
-    pub async fn create_post(
-        db: &DbConn,
-        data: post::Model,
-    ) -> Result<post::ActiveModel, DbErr> {
+    pub async fn create_post(db: &DbConn, data: post::Model) -> Result<post::ActiveModel, DbErr> {
         post::ActiveModel {
             id: Set(data.id.to_owned()),
             title: Set(data.title.to_owned()),
