@@ -13,12 +13,12 @@ use rocket_okapi::{
 use rocket::http::Method;
 use rocket_cors::{AllowedHeaders, AllowedOrigins, Cors};
 
-mod dto;
+mod controllers;
+mod dtos;
 mod error;
+mod models;
 mod pool;
-mod post;
-mod query;
-mod routes;
+mod repositories;
 mod services;
 
 use pool::Db;
@@ -50,7 +50,7 @@ async fn start() -> Result<(), rocket::Error> {
     mount_endpoints_and_merged_docs! {
         building_rocket, "/".to_owned(), openapi_settings,
             "/additional" => custom_route_spec,
-            "/post" => routes::get_routes_and_docs(&openapi_settings),
+            "/post" => controllers::post::get_routes_and_docs(&openapi_settings),
     };
 
     building_rocket.launch().await.map(|_| ())

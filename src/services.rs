@@ -1,4 +1,4 @@
-use crate::{post, post::Entity as Post};
+use crate::models::{post, post::Entity as Post};
 use sea_orm::*;
 
 pub struct PostService;
