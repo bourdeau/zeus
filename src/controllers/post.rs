@@ -4,7 +4,11 @@ use rocket_okapi::{
 };
 use sea_orm_rocket::Connection;
 
-use crate::{dto, error, pool::Db, post, query::Query, services::PostService};
+use crate::{error, pool::Db, services::PostService};
+use crate::dtos::post::PaginatePosts;
+use crate::models::post;
+use crate::repositories::post::Query;
+
 
 const DEFAULT_POSTS_PER_PAGE: u64 = 5;
 
@@ -69,7 +73,7 @@ async fn list(
     conn: Connection<'_, Db>,
     page: Option<u64>,
     posts_per_page: Option<u64>,
-) -> R<dto::PaginatePosts> {
+) -> R<PaginatePosts> {
     let db = conn.into_inner();
 
     // Set page number and items per page
@@ -88,7 +92,7 @@ async fn list(
         .await
         .expect("Cannot find posts in page");
 
-    Ok(Json(dto::PaginatePosts {
+    Ok(Json(PaginatePosts {
         page,
         posts_per_page,
         num_pages,

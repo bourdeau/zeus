@@ -1,7 +1,7 @@
 use rocket::serde::{Deserialize, Serialize};
 use rocket_okapi::okapi::schemars::{self, JsonSchema};
 
-use crate::post;
+use crate::models::post;
 
 #[derive(Clone, Debug, PartialEq, Eq, Deserialize, Serialize, JsonSchema)]
 #[serde(crate = "rocket::serde")]
