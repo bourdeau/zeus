@@ -4,11 +4,10 @@ use rocket_okapi::{
 };
 use sea_orm_rocket::Connection;
 
-use crate::{error, pool::Db, services::PostService};
 use crate::dtos::post::PaginatePosts;
 use crate::models::post;
 use crate::repositories::post::Query;
-
+use crate::{error, pool::Db, services::PostService};
 
 const DEFAULT_POSTS_PER_PAGE: u64 = 5;
 

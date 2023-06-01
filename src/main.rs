@@ -13,13 +13,13 @@ use rocket_okapi::{
 use rocket::http::Method;
 use rocket_cors::{AllowedHeaders, AllowedOrigins, Cors};
 
+mod controllers;
 mod dtos;
 mod error;
+mod models;
 mod pool;
 mod repositories;
-mod controllers;
 mod services;
-mod models;
 
 use pool::Db;
 
