@@ -15,10 +15,10 @@ pub struct ItemStock {
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ItemInformation {
-    #[prost(string, optional, tag = "1")]
-    pub name: ::core::option::Option<::prost::alloc::string::String>,
-    #[prost(string, optional, tag = "2")]
-    pub description: ::core::option::Option<::prost::alloc::string::String>,
+    #[prost(string, tag = "1")]
+    pub name: ::prost::alloc::string::String,
+    #[prost(string, tag = "2")]
+    pub description: ::prost::alloc::string::String,
 }
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -131,7 +131,6 @@ pub mod inventory_client {
             self.inner = self.inner.accept_compressed(encoding);
             self
         }
-        /// Add inserts a new Item into the inventory.
         pub async fn add(
             &mut self,
             request: impl tonic::IntoRequest<super::Item>,
@@ -149,7 +148,6 @@ pub mod inventory_client {
             let path = http::uri::PathAndQuery::from_static("/store.Inventory/Add");
             self.inner.unary(request.into_request(), path, codec).await
         }
-        /// Remove removes Items from the inventory.
         pub async fn remove(
             &mut self,
             request: impl tonic::IntoRequest<super::ItemIdentifier>,
@@ -167,7 +165,6 @@ pub mod inventory_client {
             let path = http::uri::PathAndQuery::from_static("/store.Inventory/Remove");
             self.inner.unary(request.into_request(), path, codec).await
         }
-        /// Get retrieves Item information.
         pub async fn get(
             &mut self,
             request: impl tonic::IntoRequest<super::ItemIdentifier>,
@@ -185,7 +182,6 @@ pub mod inventory_client {
             let path = http::uri::PathAndQuery::from_static("/store.Inventory/Get");
             self.inner.unary(request.into_request(), path, codec).await
         }
-        /// UpdateQuantity increases or decreases the stock quantity of an Item.
         pub async fn update_quantity(
             &mut self,
             request: impl tonic::IntoRequest<super::QuantityChangeRequest>,
@@ -205,7 +201,6 @@ pub mod inventory_client {
             );
             self.inner.unary(request.into_request(), path, codec).await
         }
-        /// UpdatePrice increases or decreases the price of an Item.
         pub async fn update_price(
             &mut self,
             request: impl tonic::IntoRequest<super::PriceChangeRequest>,
@@ -225,7 +220,6 @@ pub mod inventory_client {
             );
             self.inner.unary(request.into_request(), path, codec).await
         }
-        /// Watch streams Item updates from the inventory.
         pub async fn watch(
             &mut self,
             request: impl tonic::IntoRequest<super::ItemIdentifier>,
@@ -255,27 +249,22 @@ pub mod inventory_server {
     /// Generated trait containing gRPC methods that should be implemented for use with InventoryServer.
     #[async_trait]
     pub trait Inventory: Send + Sync + 'static {
-        /// Add inserts a new Item into the inventory.
         async fn add(
             &self,
             request: tonic::Request<super::Item>,
         ) -> Result<tonic::Response<super::InventoryChangeResponse>, tonic::Status>;
-        /// Remove removes Items from the inventory.
         async fn remove(
             &self,
             request: tonic::Request<super::ItemIdentifier>,
         ) -> Result<tonic::Response<super::InventoryChangeResponse>, tonic::Status>;
-        /// Get retrieves Item information.
         async fn get(
             &self,
             request: tonic::Request<super::ItemIdentifier>,
         ) -> Result<tonic::Response<super::Item>, tonic::Status>;
-        /// UpdateQuantity increases or decreases the stock quantity of an Item.
         async fn update_quantity(
             &self,
             request: tonic::Request<super::QuantityChangeRequest>,
         ) -> Result<tonic::Response<super::InventoryUpdateResponse>, tonic::Status>;
-        /// UpdatePrice increases or decreases the price of an Item.
         async fn update_price(
             &self,
             request: tonic::Request<super::PriceChangeRequest>,
@@ -284,7 +273,6 @@ pub mod inventory_server {
         type WatchStream: futures_core::Stream<Item = Result<super::Item, tonic::Status>>
             + Send
             + 'static;
-        /// Watch streams Item updates from the inventory.
         async fn watch(
             &self,
             request: tonic::Request<super::ItemIdentifier>,

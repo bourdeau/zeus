@@ -2,22 +2,11 @@ syntax = "proto3";
 package store;
 
 service Inventory {
-    // Add inserts a new Item into the inventory.
     rpc Add(Item) returns (InventoryChangeResponse);
-
-    // Remove removes Items from the inventory.
     rpc Remove(ItemIdentifier) returns (InventoryChangeResponse);
-
-    // Get retrieves Item information.
     rpc Get(ItemIdentifier) returns (Item);
-
-    // UpdateQuantity increases or decreases the stock quantity of an Item.
     rpc UpdateQuantity(QuantityChangeRequest) returns (InventoryUpdateResponse);
-
-    // UpdatePrice increases or decreases the price of an Item.
     rpc UpdatePrice(PriceChangeRequest) returns (InventoryUpdateResponse);
-
-    // Watch streams Item updates from the inventory.
     rpc Watch(ItemIdentifier) returns (stream Item);
 }
 
@@ -31,14 +20,14 @@ message ItemStock {
 }
 
 message ItemInformation {
-    optional string name        = 1;
-    optional string description = 2;
+    string name        = 1;
+    string description = 2;
 }
 
 message Item {
     ItemIdentifier           identifier  = 1;
     ItemStock                stock       = 2;
-    optional ItemInformation information = 3;
+    ItemInformation information = 3;
 }
 
 message QuantityChangeRequest {
