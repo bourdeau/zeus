@@ -43,9 +43,7 @@ struct AddOptions {
 async fn add(opts: AddOptions) -> Result<(), Box<dyn std::error::Error>> {
     let mut client = InventoryClient::connect(GRPC_SERVER_HOST).await?;
 
-    let id = ItemIdentifier {
-        sku: opts.sku
-    };
+    let id = ItemIdentifier { sku: opts.sku };
 
     let stock = ItemStock {
         price: opts.price,
@@ -113,7 +111,9 @@ struct UpdateQuantityOptions {
     change: i32,
 }
 
-async fn update_quantity(opts: UpdateQuantityOptions) -> Result<(), Box<dyn std::error::Error>> {
+async fn update_quantity(
+    opts: UpdateQuantityOptions,
+) -> Result<(), Box<dyn std::error::Error>> {
     let mut client = InventoryClient::connect(GRPC_SERVER_HOST).await?;
 
     let request = tonic::Request::new(QuantityChangeRequest {

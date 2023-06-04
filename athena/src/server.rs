@@ -23,7 +23,6 @@ const NO_ITEM_ERR: &str = "the item requested was not found";
 const NO_STOCK_ERR: &str = "no stock provided for item";
 const UNSUFF_INV_ERR: &str = "not enough inventory for quantity change";
 
-
 #[derive(Debug)]
 pub struct StoreInventory {
     inventory: Arc<Mutex<HashMap<String, Item>>>,
@@ -39,7 +38,6 @@ impl Default for StoreInventory {
 
 #[tonic::async_trait]
 impl Inventory for StoreInventory {
-
     async fn add(
         &self,
         request: Request<Item>,
@@ -219,12 +217,12 @@ impl Inventory for StoreInventory {
         // retrieve the relevant item and get a baseline
         let id = request.into_inner();
         let mut item = self.get(Request::new(id.clone())).await?.into_inner();
-        
+
         // the channel will be our stream back to the client, we'll send copies
         // of the requested item any time we notice a change to it in the
         // inventory.
         let (tx, rx) = mpsc::unbounded_channel();
-        
+
         // we'll loop and poll new copies of the item until either the client
         // closes the connection, or an error occurs.
         let inventory = self.inventory.clone();
