@@ -2,19 +2,19 @@ version: "3.8"
    
 services:
 
-  # apollo:
-  #   build:
-  #     dockerfile: ./apollo/Dockerfile
-  #   container_name: apollo
-  #   hostname: apollo
-  #   volumes:
-  #     - .:/app
-  #   ports:
-  #     - "8000:8000"
-  #   env_file:
-  #     - ./.env
-  #   depends_on:
-  #     - zeusdb
+  apollo:
+    build:
+      dockerfile: ./apollo/Dockerfile
+    container_name: apollo
+    hostname: apollo
+    volumes:
+      - .:/app
+    ports:
+      - "8000:8000"
+    env_file:
+      - ./.env
+    depends_on:
+      - zeusdb
 
   athena:
     build:

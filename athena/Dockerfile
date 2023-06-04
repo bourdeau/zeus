@@ -19,4 +19,7 @@ USER app
 WORKDIR /app
 COPY --chown=app:app . /app
 
+RUN cargo build
+RUN cargo build --release --bin athena-cli
+
 CMD ["cargo", "run", "--release", "--bin", "athena"]

@@ -35,15 +35,17 @@ struct AddOptions {
     #[clap(default_value = "0", long)]
     quantity: u32,
     #[clap(long)]
-    name: Option<String>,
+    name: String,
     #[clap(long)]
-    description: Option<String>,
+    description: String,
 }
 
 async fn add(opts: AddOptions) -> Result<(), Box<dyn std::error::Error>> {
     let mut client = InventoryClient::connect(GRPC_SERVER_HOST).await?;
 
-    let id = ItemIdentifier { sku: opts.sku };
+    let id = ItemIdentifier {
+        sku: opts.sku
+    };
 
     let stock = ItemStock {
         price: opts.price,
