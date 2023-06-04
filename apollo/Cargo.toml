@@ -1,17 +1,17 @@
 [package]
-name = "zeus-api"
+name = "apollo"
 version = "0.1.1"
 authors = ["Pierre-Henri Bourdeau <phbasic@gmail.com>"]
 edition = "2021"
 readme = "README.md"
-homepage = "https://github.com/bourdeau/zeus/zeus-api"
-repository = "https://github.com/bourdeau/zeus/zeus-api"
+homepage = "https://github.com/bourdeau/zeus/apollo"
+repository = "https://github.com/bourdeau/zeus/apollo"
 license = "Apache-2.0"
 keywords = ["rust", "api", "rocket"]
 publish = true
 
 [[bin]]
-name = "zeusapi"
+name = "apollo"
 path = "src/main.rs"
 
 [dependencies]

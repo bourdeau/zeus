@@ -1,2 +1,2 @@
 [workspace]
-members = ["zeus-api", "zeus-grpc"]
+members = ["apollo", "athena"]

@@ -1,5 +1,5 @@
 [package]
-name = "zeus-grpc"
+name = "athena"
 edition = "2021"
 version = "0.1.1"
 authors = ["Pierre-Henri Bourdeau <phbasic@gmail.com>"]
@@ -12,11 +12,11 @@ publish = true
 
 
 [[bin]]
-name = "zeusgrpcserver"
+name = "athena"
 path = "src/main.rs"
 
 [[bin]]
-name = "zeusgrpccli"
+name = "athena-cli"
 path = "src/cli.rs"
 
 
