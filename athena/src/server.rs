@@ -44,14 +44,12 @@ impl Inventory for StoreInventory {
     ) -> Result<Response<InventoryChangeResponse>, Status> {
         let item = request.into_inner();
 
-        // validate SKU, verify that it's present and not empty
         let sku = match item.identifier.as_ref() {
-            Some(id) if id.sku == "" => return Err(Status::invalid_argument(EMPTY_SKU_ERR)),
+            Some(id) if id.sku.is_empty() => return Err(Status::invalid_argument(EMPTY_SKU_ERR)),
             Some(id) => id.sku.to_owned(),
             None => return Err(Status::invalid_argument(NO_ID_ERR)),
         };
 
-        // validate stock, verify its present and price is not negative or $0.00
         match item.stock.as_ref() {
             Some(stock) if stock.price <= 0.00 => {
                 return Err(Status::invalid_argument(BAD_PRICE_ERR))
@@ -60,14 +58,12 @@ impl Inventory for StoreInventory {
             None => return Err(Status::invalid_argument(NO_STOCK_ERR)),
         };
 
-        // if the item is already present don't allow the duplicate
         let mut map = self.inventory.lock().await;
-        if let Some(_) = map.get(&sku) {
+        if map.get(&sku).is_some() {
             return Err(Status::already_exists(DUP_ITEM_ERR));
         }
 
-        // add the item to the inventory
-        map.insert(sku.into(), item);
+        map.insert(sku, item);
 
         Ok(Response::new(InventoryChangeResponse {
             status: "success".into(),
@@ -80,12 +76,10 @@ impl Inventory for StoreInventory {
     ) -> Result<Response<InventoryChangeResponse>, Status> {
         let identifier = request.into_inner();
 
-        // don't allow empty SKU
-        if identifier.sku == "" {
+        if identifier.sku.is_empty() {
             return Err(Status::invalid_argument(EMPTY_SKU_ERR));
         }
 
-        // remove the item (if present)
         let mut map = self.inventory.lock().await;
         let msg = match map.remove(&identifier.sku) {
             Some(_) => "success: item was removed",
@@ -100,12 +94,10 @@ impl Inventory for StoreInventory {
     async fn get(&self, request: Request<ItemIdentifier>) -> Result<Response<Item>, Status> {
         let identifier = request.into_inner();
 
-        // don't allow empty SKU
-        if identifier.sku == "" {
+        if identifier.sku.is_empty() {
             return Err(Status::invalid_argument(EMPTY_SKU_ERR));
         }
 
-        // retrieve the item if it exists
         let map = self.inventory.lock().await;
         let item = match map.get(&identifier.sku) {
             Some(item) => item,
@@ -121,39 +113,32 @@ impl Inventory for StoreInventory {
     ) -> Result<Response<InventoryUpdateResponse>, Status> {
         let change = request.into_inner();
 
-        // don't allow empty SKU
-        if change.sku == "" {
+        if change.sku.is_empty() {
             return Err(Status::invalid_argument(EMPTY_SKU_ERR));
         }
 
-        // quantity changes with no actual change don't make sense, inform user
         if change.change == 0 {
             return Err(Status::invalid_argument(EMPTY_QUANT_ERR));
         }
 
-        // retrieve the current inventory item data
         let mut map = self.inventory.lock().await;
         let item = match map.get_mut(&change.sku) {
             Some(item) => item,
             None => return Err(Status::not_found(NO_ITEM_ERR)),
         };
 
-        // retrieve the stock mutable so we can update the quantity
         let mut stock = match item.stock.borrow_mut() {
             Some(stock) => stock,
             None => return Err(Status::internal(NO_STOCK_ERR)),
         };
 
-        // validate and then handle the quantity change
         stock.quantity = match change.change {
-            // handle negative numbers as stock reduction
             change if change < 0 => {
-                if change.abs() as u32 > stock.quantity {
+                if change.unsigned_abs() > stock.quantity {
                     return Err(Status::resource_exhausted(UNSUFF_INV_ERR));
                 }
-                stock.quantity - change.abs() as u32
+                stock.quantity - change.unsigned_abs()
             }
-            // handle positive numbers as stock increases
             change => stock.quantity + change as u32,
         };
 
@@ -170,36 +155,29 @@ impl Inventory for StoreInventory {
     ) -> Result<Response<InventoryUpdateResponse>, Status> {
         let change = request.into_inner();
 
-        // don't allow empty SKU
-        if change.sku == "" {
+        if change.sku.is_empty() {
             return Err(Status::invalid_argument(EMPTY_SKU_ERR));
         }
 
-        // $0.00 disallowed and negatives don't make sense, inform the user
         if change.price <= 0.0 {
             return Err(Status::invalid_argument(BAD_PRICE_ERR));
         }
 
-        // retrieve the current inventory item data
         let mut map = self.inventory.lock().await;
         let item = match map.get_mut(&change.sku) {
             Some(item) => item,
             None => return Err(Status::not_found(NO_ITEM_ERR)),
         };
 
-        // retrieve the stock mutable so we can update the quantity
         let mut stock = match item.stock.borrow_mut() {
             Some(stock) => stock,
             None => return Err(Status::internal(NO_STOCK_ERR)),
         };
 
-        // let the client know if they requested to change the price to the
-        // price that is already currently set
         if stock.price == change.price {
             return Err(Status::invalid_argument(DUP_PRICE_ERR));
         }
 
-        // update the item unit price
         stock.price = change.price;
 
         Ok(Response::new(InventoryUpdateResponse {
@@ -214,7 +192,6 @@ impl Inventory for StoreInventory {
         &self,
         request: Request<ItemIdentifier>,
     ) -> Result<Response<Self::WatchStream>, Status> {
-        // retrieve the relevant item and get a baseline
         let id = request.into_inner();
         let mut item = self.get(Request::new(id.clone())).await?.into_inner();
 
