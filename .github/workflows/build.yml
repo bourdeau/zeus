@@ -16,17 +16,17 @@ jobs:
     runs-on: ubuntu-latest
     steps:
 
-      - name: check out
+      - name: Check out
         uses: actions/checkout@v3
 
-      - name: docker compose
+      - name: Docker Compose
         run: docker compose -f docker-compose.yml up -d --build
 
       - name: "Wait for docker to finish building"
         run: sleep 10
 
-      - name: Cargo Check
-        run: docker exec athena cargo check
+      - name: Docker PS
+        run: docker compose ps
 
-      - name: Cargo Check
+      - name: Cargo Check Apollo
         run: docker exec apollo cargo check
