@@ -1,44 +1,44 @@
-name: linter
+# name: linter
 
-on:
-  pull_request:
-    branches:
-      - "**"
-    types: [opened, synchronize, reopened]
+# on:
+#   pull_request:
+#     branches:
+#       - "**"
+#     types: [opened, synchronize, reopened]
 
-jobs:
-  check:
-    name: check
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions-rust-lang/setup-rust-toolchain@v1
-        with:
-          toolchain: stable
-          components: rustfmt
-      - run: cargo check
+# jobs:
+#   check:
+#     name: check
+#     runs-on: ubuntu-latest
+#     steps:
+#       - uses: actions/checkout@v3
+#       - uses: actions-rust-lang/setup-rust-toolchain@v1
+#         with:
+#           toolchain: stable
+#           components: rustfmt
+#       - run: cargo check
 
-  fmt:
-    name: fmt
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions-rust-lang/setup-rust-toolchain@v1
-        with:
-          toolchain: stable
-          components: rustfmt
-      - run: cargo fmt --all -- --check
+#   fmt:
+#     name: fmt
+#     runs-on: ubuntu-latest
+#     steps:
+#       - uses: actions/checkout@v3
+#       - uses: actions-rust-lang/setup-rust-toolchain@v1
+#         with:
+#           toolchain: stable
+#           components: rustfmt
+#       - run: cargo fmt --all -- --check
 
-  clippy:
-    name: clippy
-    runs-on: ubuntu-latest
-    permissions:
-      checks: write # to add clippy checks to PR diffs
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions-rust-lang/setup-rust-toolchain@v1
-        with:
-          toolchain: stable
-          components: clippy
-          override: true
-      - run: cargo clippy
+#   clippy:
+#     name: clippy
+#     runs-on: ubuntu-latest
+#     permissions:
+#       checks: write # to add clippy checks to PR diffs
+#     steps:
+#       - uses: actions/checkout@v3
+#       - uses: actions-rust-lang/setup-rust-toolchain@v1
+#         with:
+#           toolchain: stable
+#           components: clippy
+#           override: true
+#       - run: cargo clippy

@@ -19,3 +19,5 @@ jobs:
       - uses: isbang/compose-action@v1.4.1
         with:
           compose-file: "./docker-compose.yml"
+      - name: Cargo Check
+        run: docker exec athena cargo check
