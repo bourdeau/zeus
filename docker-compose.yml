@@ -4,7 +4,8 @@ services:
 
   apollo:
     build:
-      dockerfile: ./apollo/Dockerfile
+      context: ./apollo
+      dockerfile: Dockerfile
     container_name: apollo
     hostname: apollo
     volumes:
@@ -18,7 +19,8 @@ services:
 
   athena:
     build:
-      dockerfile: ./athena/Dockerfile
+      context: ./athena
+      dockerfile: Dockerfile
     container_name: athena
     hostname: athena
     volumes:
