@@ -15,9 +15,15 @@ jobs:
     name: docker compose
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - uses: isbang/compose-action@v1.4.1
-        with:
-          compose-file: "./docker-compose.yml"
+
+      - name: check out
+        uses: actions/checkout@v3
+
+      - name: docker compose
+        run: docker compose -f docker-compose.yml up -d
+
+      - name: "Wait for docker to finish building"
+        run: sleep 30
+
       - name: Cargo Check
         run: docker exec athena cargo check
