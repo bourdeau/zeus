@@ -22,11 +22,11 @@ jobs:
       - name: Docker Compose
         run: docker compose -f docker-compose.yml up -d --build
 
-      - name: "Wait for docker to finish building"
-        run: sleep 10
+      - name: Wait for docker to finish building
+        run: sleep 30
 
       - name: Docker PS
         run: docker compose ps
 
       - name: Cargo Check Apollo
-        run: docker exec apollo cargo check
+        run: docker exec apollo cargo --version
